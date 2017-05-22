@@ -1,3 +1,23 @@
+function insertMirrorlistLinks() {
+  var colgroupElement = document.getElementsByTagName('colgroup')[0]
+  if (colgroupElement !== undefined)
+    colgroupElement.parentNode.removeChild(colgroupElement)
+  var theadElement = document.getElementsByTagName('thead')[0]
+  if (theadElement !== undefined)
+    theadElement.firstChild.append(document.createElement('th'))
+  var tbodyElement = document.getElementsByTagName('tbody')[0]
+  for (var trElement = tbodyElement.firstChild; trElement !== null; trElement = trElement.nextElementSibling)
+  {
+    var tdMirrorlist = document.createElement('td');
+    if (trElement.childNodes[1].innerHTML !== '-')
+    {
+      var fileName = trElement.childNodes[0].firstChild.href
+      tdMirrorlist.innerHTML = '<a href="' fileName + '?mirrorlist" style="display: initial" title="Mirrorlist ' + fileName + '"><img src="/css/mirrorlist16.png" /></a>'
+    }
+    trElement.append(tdMirrorlist);
+  }
+}
+
 if (!!(window.history && history.pushState)) {
 
   var addEvent = (function () {
@@ -61,6 +81,7 @@ if (!!(window.history && history.pushState)) {
       var elements = div.getElementsByClassName('box-content')[0];
       target.innerHTML = elements.innerHTML;
       initHistory();
+      insertMirrorlistLink();
       return true;
     }
     return false;
